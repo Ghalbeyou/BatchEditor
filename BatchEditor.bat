@@ -9,6 +9,10 @@ cls
 set editing=0
 set file=none
 set path=none
+cd core
+call config.bat
+cd ..
+
 
 :main
 if not exist lic goto :license
@@ -34,7 +38,9 @@ set file=%3
 cd core
 call edit.bat
 cd ..
-echo [Press any key] [#-#] [Quit]
+echo.
+echo.
+echo [@] [ANY KEY] [#-#] [INSTANT QUIT]
 pause > nul
 exit
 
@@ -44,10 +50,17 @@ title Batch Editor - Hub
 cls
 
 echo In order to start coding, open the program in this way:
-echo BatchEditor o BatchEditor/Data Example.Txt
-echo [!] Remember that there should be a space between "BatchEditor/Data" and "Example.Txt".
-
-echo [Press any key] [#-#] [Quit]
+echo %0 o To/Path File.EXT
+echo.
+echo [!] "To/Path" must be a valid path to the directory of the file and "File.EXT" should be a valid file name.
+echo [#] Example:
+echo.
+echo [$] %0 o E:\Code package.json
+echo.
+echo [!] Remember that there should be a space between "To/Path" and "File.EXT".
+echo.
+echo.
+echo [@] [ANY KEY] [#-#] [INSTANT QUIT]
 
 pause > nul
 exit

@@ -1,5 +1,9 @@
 setlocal enabledelayedexpansion
 
+cls
+
+:: Edit is enabled with this single file!
+
 if "%file%"=="none" (
     echo No file specified.
     exit /b
@@ -42,14 +46,14 @@ for /l %%i in (1,1,%line_count%) do (
 )
 echo.
 echo [Commands: w - up, s - down, e - edit, a - add line, d - delete line, q - save and exit]
-choice /C wseadq
-
-if "%errorlevel%"=="1" goto up
-if "%errorlevel%"=="2" goto down
-if "%errorlevel%"=="3" goto edit
-if "%errorlevel%"=="4" goto add_line
-if "%errorlevel%"=="5" goto delete_line
-if "%errorlevel%"=="6" goto save_and_exit
+echo.
+set /p input=[@] [W.S.E.A.D.Q] [#-#] [Custom Action]
+if "%input%"=="w" goto up
+if "%input%"=="s" goto down
+if "%input%"=="e" goto edit
+if "%input%"=="a" goto add_line
+if "%input%"=="d" goto delete_line
+if "%input%"=="q" goto save_and_exit
 goto display
 
 :up
@@ -95,6 +99,7 @@ if %line_count% gtr 0 (
 goto display
 
 :save_and_exit
+echo [!] Saving in progress ...
 (
     for /l %%i in (1,1,%line_count%) do (
         setlocal enabledelayedexpansion
@@ -103,5 +108,11 @@ goto display
     )
 ) > "%filepath%"
 
-echo [File Saved: %filepath%]
+echo File saved: "%filepath%"
+echo.
+echo [@] [B-b] [#-#] [BACK TO EDITOR]
+echo [@] [Q-q] [#-#] [INSTANT QUIT]
+echo.
+set /p input=
+if "%input%"=="b" goto :display
 exit /b
